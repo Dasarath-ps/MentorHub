@@ -8,7 +8,7 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-
+const [confirmPassword, setConfirmPassword] = useState("")
     const navigator = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -165,6 +165,39 @@ const Register = () => {
                                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
                                 >
                                     {showPassword ? "🙈" : "👁"}
+                                </button>
+
+                            </div>
+
+                        </div>
+                        {/*Confirm Password*/}
+
+                        <div>
+
+                            <label className="text-sm font-semibold text-gray-700">
+                                Confirm Password
+                            </label>
+
+                            <div className="relative mt-2">
+
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                                    🔒
+                                </span>
+
+                                <input
+                                    type={confirmPassword ? "text" : "password"}
+                                    value={confirmPassword}
+                                    placeholder="Create a password"
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="w-full pl-12 pr-12 h-12 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition-all"
+                                />
+
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!confirmPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                                >
+                                    {confirmPassword ? "🙈" : "👁"}
                                 </button>
 
                             </div>

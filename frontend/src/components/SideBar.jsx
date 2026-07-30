@@ -125,7 +125,7 @@ const SideBar = ({ showSideBar }) => {
 
             <div className="border-t p-4">
 
-                <div className="flex items-center gap-3">
+                {/* <div className="flex items-center gap-3">
 
                     <div className="w-11 h-11 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
                         D
@@ -145,9 +145,9 @@ const SideBar = ({ showSideBar }) => {
                         </div>
                     )}
 
-                </div>
+                </div> */}
 
-                <button
+                {/* <button
                     className="
                         mt-5
                         w-full
@@ -166,7 +166,7 @@ const SideBar = ({ showSideBar }) => {
                     <FaSignOutAlt />
 
                     {showSideBar && <span>Logout</span>}
-                </button>
+                </button> */}
 
             </div>
 

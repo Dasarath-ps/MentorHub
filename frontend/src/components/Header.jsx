@@ -2,8 +2,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ showSideBar, setShowSideBar }) => {
+    const navigate = useNavigate();
     return (
         <header
             className={`
@@ -152,11 +154,11 @@ const Header = ({ showSideBar, setShowSideBar }) => {
 
                 <div className="flex items-center gap-3 cursor-pointer">
 
-                    <div
+                    <button
                         className="
-                            w-11
-                            h-11
-                            rounded-full
+                            w-24
+                            h-10
+                            rounded-md
                             bg-green-600
                             text-white
                             flex
@@ -164,22 +166,36 @@ const Header = ({ showSideBar, setShowSideBar }) => {
                             justify-center
                             font-bold
                             text-lg
+                            hover:bg-green-700
+                            transition-all
+                            duration-300
                         "
+                        onClick={() => navigate('/login')}
                     >
-                        D
-                    </div>
+                        Sign In
+                    </button>
 
-                    <div className="hidden md:block">
+                    <button
+                        className="
+                            w-24
+                            h-10
+                            rounded-md
+                            bg-green-600
+                            text-white
+                            flex
+                            items-center
+                            justify-center
+                            font-bold
+                            text-lg
+                            hover:bg-green-700
+                            transition-all
+                            duration-300
+                        "
+                        onClick={() => navigate('register')}
+                    >
+                        Sign Up
+                    </button>
 
-                        <h3 className="font-semibold text-gray-800">
-                            Devanandan
-                        </h3>
-
-                        <p className="text-sm text-gray-500">
-                            Mentee
-                        </p>
-
-                    </div>
 
                 </div>
 
