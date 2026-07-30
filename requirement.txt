@@ -3,3 +3,5 @@ uvicorn
 pydantic
 motor
 bcrypt
+email-validator
+aiosmtplib

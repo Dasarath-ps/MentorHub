@@ -3,6 +3,9 @@ from app.database import db
 from app.schema import UserAuth
 from app.schema import LoginModel
 from app.security import hash_password, verify_password
+from secrets import randbelow
+from datetime import datetime, timedelta
+from app.email_service import send_otp
 
 router = APIRouter(tags=["Authentication"])
 
@@ -26,6 +29,22 @@ async def register(user_data: UserAuth):
     existing_user = await db["users"].find_one({"email": user_data.email})
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+    else:
+        # Generate a secure 6-digit OTP
+        otp = "".join(str(randbelow(10)) for _ in range(6))
+        print(otp)
+        # Store OTP
+        await db["otp"].insert_one({
+            "email": user_data.email,
+            "otp": otp,
+            "created_at": datetime.utcnow(),
+            "expires_at": datetime.utcnow() + timedelta(minutes=5),
+            "attempts": 0
+        })
+        await send_otp(user_data.email,otp)
+        return {
+            "message": "OTP sent successfully"
+        }
 
     # Convert Pydantic model to dict and hash password
     user_dict = user_data.model_dump()

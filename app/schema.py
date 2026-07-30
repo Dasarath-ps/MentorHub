@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class LoginModel(BaseModel):
     email: str
@@ -8,4 +9,14 @@ class UserAuth(BaseModel):
     userName: str
     email: str
     password: str
-    # You can add other fields here for registration (e.g., name: str)
+
+class OTPModel(BaseModel):
+    email: str
+    otp: str
+    created_at: datetime
+    expires_at: datetime
+    attempts: int = 0
+
+class VerifyOTPRequest(BaseModel):
+    email: str
+    otp: str

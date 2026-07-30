@@ -22,7 +22,7 @@ const Register = () => {
             });
 
             console.log(res.data);
-            navigator("/login");
+            navigator("/");
         } catch (err) {
             console.log(err.response?.data || err.message);
         }
