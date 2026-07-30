@@ -1,13 +1,15 @@
 from fastapi import APIRouter, HTTPException
 from app.database import db
 from app.schema import UserAuth
+from app.schema import LoginModel
 from app.security import hash_password, verify_password
 
 router = APIRouter(tags=["Authentication"])
 
 
-@router.post("/login")
-async def login(user_data: UserAuth):
+@router.post("/")
+async def login(user_data: LoginModel):
+    print(user_data)
     user = await db["users"].find_one({"email": user_data.email})
 
     # Combine the checks to prevent user enumeration (good security practice)
@@ -19,6 +21,7 @@ async def login(user_data: UserAuth):
 
 @router.post("/register")
 async def register(user_data: UserAuth):
+    #print(user_data)
     # Check if user already exists
     existing_user = await db["users"].find_one({"email": user_data.email})
     if existing_user:
