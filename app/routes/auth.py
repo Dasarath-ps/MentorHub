@@ -28,11 +28,13 @@ async def register(user_data: UserAuth):
     # Check if user already exists
     existing_user = await db["users"].find_one({"email": user_data.email})
     if existing_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        return {
+            "message": "User already exists"
+        }
     else:
         # Generate a secure 6-digit OTP
         otp = "".join(str(randbelow(10)) for _ in range(6))
-        print(otp)
+
         # Store OTP
         await db["otp"].insert_one({
             "email": user_data.email,
@@ -43,7 +45,8 @@ async def register(user_data: UserAuth):
         })
         await send_otp(user_data.email,otp)
         return {
-            "message": "OTP sent successfully"
+            "message": "OTP sent successfully",
+            "otp":otp
         }
 
     # Convert Pydantic model to dict and hash password

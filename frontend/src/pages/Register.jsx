@@ -22,7 +22,8 @@ const [confirmPassword, setConfirmPassword] = useState("")
             });
 
             console.log(res.data);
-            navigator("/");
+            alert("Check your email")
+            navigator("/verify")
         } catch (err) {
             console.log(err.response?.data || err.message);
         }
