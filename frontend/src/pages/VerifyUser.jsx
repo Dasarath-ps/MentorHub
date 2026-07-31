@@ -13,21 +13,14 @@ const VerifyUser = () => {
         e.preventDefault();
 
         try {
-            const res = await api.post("/register", {
-                userName,
-                email,
-                password,
+            const res = await api.post("/verify", {
+               otp
             });
-
-            console.log(res.data);
-            alert("Check your email")
-            navigator("/verify")
+            console.log(res.data)
         } catch (err) {
             console.log(err.response?.data || err.message);
         }
-
     };
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 flex items-center justify-center p-6">
 
