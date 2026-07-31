@@ -25,6 +25,7 @@ const VerifyUser = () => {
         } catch (err) {
             console.log(err.response?.data || err.message);
         }
+
     };
 
     return (
@@ -93,10 +94,10 @@ const VerifyUser = () => {
                                 </span>
 
                                 <input
-                                    type={showPassword ? "text" : "password"}
-                                    value={password}
+                                    type={showOtp ? "text" : "password"}
+                                    value={otp}
                                     placeholder="Create a password"
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => setOtp(e.target.value)}
                                     className="w-full pl-12 pr-12 h-12 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition-all"
                                 />
 
@@ -105,7 +106,7 @@ const VerifyUser = () => {
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
                                 >
-                                    {showPassword ? "🙈" : "👁"}
+                                    {showOtp ? "🙈" : "👁"}
                                 </button>
 
                             </div>
