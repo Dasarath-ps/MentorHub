@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status
 from app.database import db
 from app.schema import UserAuth
 from app.schema import LoginModel
 from app.schema import VerifyOTPRequest
-from app.security import hash_password, verify_password
+from app.schema import AdminAuth
+from app.security import create_access_token, hash_password, verify_password
 from secrets import randbelow
 from datetime import datetime, timedelta
 from app.email_service import send_otp
@@ -14,6 +15,13 @@ router = APIRouter(tags=["Authentication"])
 @router.post("/login")
 async def login(user_data: LoginModel):
     user = await db["users"].find_one({"email": user_data.email})
+    admin = await db["AdminAuth"].find_one({"adminName": user_data.email})
+    if admin:
+        if not user_data.password == admin["password"]:
+            raise HTTPException(status_code=401, detail="Invalid admin credentials")
+
+        token = create_access_token({"sub": admin["adminName"], "role": "admin"})
+        return {"message": "Admin login successful", "token": token}
 
     # Combine the checks to prevent user enumeration (good security practice)
     if not user or not verify_password(user_data.password, user["password"]):
@@ -24,7 +32,16 @@ async def login(user_data: LoginModel):
             status_code=403,
             detail="Your email is not verified. Please verify your OTP before logging in."
         )
-    return {"message": "Login successful"}
+
+    token = create_access_token({"sub": user["email"], "role": "user"})
+    return {
+        "message": "User login successful",
+        "token": token,
+        "user": {
+            "email": user["email"],
+            "username": user.get("username") or user.get("userName")
+        }
+    }
 
 #register page 
 @router.post("/register")

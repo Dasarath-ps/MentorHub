@@ -5,3 +5,4 @@ motor
 bcrypt
 email-validator
 aiosmtplib
+PyJWT

@@ -18,9 +18,14 @@ const Login = () => {
                 email,
                 password,
             });
-
             console.log(res.data);
-            navigator("/home");
+
+
+            if (res.data.message === "Admin login successful") {
+                navigator("/admin");
+            } else if (res.data.message === "User login successful") {
+                navigator("/home");
+            }
         } catch (err) {
             // Extract the "detail" message sent by FastAPI ("Your email is not verified...")
             const errorMessage = err.response?.data?.detail || "Login failed";

@@ -20,3 +20,7 @@ class OTPModel(BaseModel):
 class VerifyOTPRequest(BaseModel):
     email: str
     otp: str
+
+class AdminAuth(BaseModel):
+    adminName: str
+    password: str
