@@ -1,20 +1,43 @@
-import { Routes, Route } from "react-router-dom"
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import Home from "./pages/Home.jsx"
-import GuestHome from "./pages/GuestHome.jsx"
+import Home from "./pages/Home.jsx";
+import GuestHome from "./pages/GuestHome.jsx";
 import VerifyUser from "./pages/VerifyUser.jsx";
+
 const App = () => {
+  const location = useLocation();
 
-    return <div>
-        <Routes>
-            <Route path="/verify" element = {<VerifyUser/>}/>
-            <Route path="/" element={<GuestHome />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/home" element={<Home />} />
-        </Routes>
+  // 🧹 Dismiss all active toasts whenever the route changes
+  useEffect(() => {
+    toast.dismiss();
+  }, [location.pathname]);
+
+  return (
+    <div>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#fff",
+            color: "#333",
+          },
+        }}
+      />
+
+      <Routes>
+        <Route path="/verify" element={<VerifyUser />} />
+        <Route path="/" element={<GuestHome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
     </div>
-}
+  );
+};
 
-export default App
+export default App;

@@ -2,13 +2,14 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../api.js";
+import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-const [confirmPassword, setConfirmPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
     const navigator = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -20,10 +21,11 @@ const [confirmPassword, setConfirmPassword] = useState("")
                 email,
                 password,
             });
+            toast.success(res.data.message || "otp send successfully!");
+            setTimeout(() => {
+                navigator("/verify", { state: { email } }); // Redirect to varify page
+            }, 1200);
 
-            console.log(res.data);
-            alert("Check your email")
-            navigator("/verify")
         } catch (err) {
             console.log(err.response?.data || err.message);
         }
@@ -104,6 +106,7 @@ const [confirmPassword, setConfirmPassword] = useState("")
 
                                 <input
                                     type="text"
+                                    required
                                     value={userName}
                                     placeholder="Choose a username"
                                     onChange={(e) => setUserName(e.target.value)}
@@ -129,6 +132,7 @@ const [confirmPassword, setConfirmPassword] = useState("")
 
                                 <input
                                     type="email"
+                                    required
                                     value={email}
                                     placeholder="Enter your email"
                                     onChange={(e) => setEmail(e.target.value)}
@@ -155,6 +159,7 @@ const [confirmPassword, setConfirmPassword] = useState("")
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     value={password}
+                                    required
                                     placeholder="Create a password"
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="w-full pl-12 pr-12 h-12 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition-all"
@@ -189,6 +194,7 @@ const [confirmPassword, setConfirmPassword] = useState("")
                                     type={confirmPassword ? "text" : "password"}
                                     value={confirmPassword}
                                     placeholder="Create a password"
+                                    required
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     className="w-full pl-12 pr-12 h-12 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition-all"
                                 />

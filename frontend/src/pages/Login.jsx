@@ -1,7 +1,7 @@
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../api.js";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const res = await api.post("/", {
+            const res = await api.post("/login", {
                 email,
                 password,
             });
@@ -22,12 +22,19 @@ const Login = () => {
             console.log(res.data);
             navigator("/home");
         } catch (err) {
-            console.log(err.response?.data);
+            // Extract the "detail" message sent by FastAPI ("Your email is not verified...")
+            const errorMessage = err.response?.data?.detail || "Login failed";
+            const status = err.response?.status;
+
+            // 1. Display the backend error message in the toast
+            toast.error(errorMessage);
+
         }
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 flex items-center justify-center p-6">
+        <div
+            className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 flex items-center justify-center p-6">
 
             <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden grid md:grid-cols-2">
 
@@ -81,10 +88,7 @@ const Login = () => {
                         Sign in to continue your journey.
                     </p>
 
-                    <form
-                        onSubmit={handleSubmit}
-                        className="mt-8 space-y-6"
-                    >
+                    <form onSubmit={handleSubmit} className="mt-8 space-y-6">
 
                         {/* Email */}
 
@@ -100,12 +104,10 @@ const Login = () => {
                                     ✉
                                 </span>
 
-                                <input
-                                    type="email"
-                                    value={email}
-                                    placeholder="Enter your email"
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-12 pr-4 h-12 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition-all"
+                                <input type="email" value={email} required placeholder="Enter your email" onChange={(e) =>
+                                    setEmail(e.target.value)}
+                                    className="w-full pl-12 pr-4 h-12 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white
+                        focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition-all"
                                 />
 
                             </div>
@@ -121,14 +123,6 @@ const Login = () => {
                                 <label className="text-sm font-semibold text-gray-700">
                                     Password
                                 </label>
-
-                                <button
-                                    type="button"
-                                    className="text-sm text-green-600 hover:underline"
-                                >
-                                    Forgot Password?
-                                </button>
-
                             </div>
 
                             <div className="relative mt-2">
@@ -137,17 +131,15 @@ const Login = () => {
                                     🔒
                                 </span>
 
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    value={password}
-                                    placeholder="Enter your password"
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-12 pr-12 h-12 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition-all"
+                                <input type={showPassword ? "text" : "password"} value={password} required
+                                    placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full pl-12 pr-12 h-12 rounded-xl border border-gray-300 bg-gray-50 focus:bg-white
+                        focus:border-green-600 focus:ring-4 focus:ring-green-100 outline-none transition-all"
                                 />
-
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
+                                <button type="button" className="text-sm text-green-600 hover:underline">
+                                    Forgot Password?
+                                </button>
+                                <button type="button" onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
                                 >
                                     {showPassword ? "🙈" : "👁"}
@@ -163,10 +155,7 @@ const Login = () => {
 
                             <label className="flex items-center gap-2 text-sm text-gray-600">
 
-                                <input
-                                    type="checkbox"
-                                    className="accent-green-600"
-                                />
+                                <input type="checkbox" className="accent-green-600" />
 
                                 Remember me
 
@@ -176,10 +165,8 @@ const Login = () => {
 
                         {/* Login */}
 
-                        <button
-                            type="submit"
-                            className="w-full h-12 rounded-xl bg-green-600 hover:bg-green-700 text-white font-semibold transition-all shadow-lg hover:shadow-xl"
-                        >
+                        <button type="submit"
+                            className="w-full h-12 rounded-xl bg-green-600 hover:bg-green-700 text-white font-semibold transition-all shadow-lg hover:shadow-xl">
                             Sign In
                         </button>
 
@@ -201,10 +188,7 @@ const Login = () => {
 
                         Don't have an account?{" "}
 
-                        <Link
-                            to="/register"
-                            className="font-semibold text-green-600 hover:underline"
-                        >
+                        <Link to="/register" className="font-semibold text-green-600 hover:underline">
                             Create Account
                         </Link>
 
@@ -219,4 +203,3 @@ const Login = () => {
 };
 
 export default Login;
-
