@@ -7,7 +7,7 @@ import Register from "./pages/Register.jsx";
 import Home from "./pages/Home.jsx";
 import GuestHome from "./pages/GuestHome.jsx";
 import VerifyUser from "./pages/VerifyUser.jsx";
-
+import Admin from "./pages/Admin.jsx";
 const App = () => {
   const location = useLocation();
 
@@ -35,6 +35,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );
