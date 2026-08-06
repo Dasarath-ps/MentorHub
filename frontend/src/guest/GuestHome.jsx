@@ -1,8 +1,8 @@
-import React from 'react'
-import Header from "../components/Header";
-import SideBar from "../components/SideBar";
-import { useState } from "react";
-const Admin = () => {
+import React, { useState } from 'react'
+import Header from "./components/Header";
+import SideBar from "./components/SideBar";
+import MainBody from "./components/MainBody";
+const GuestHome = () => {
     const [showSideBar, setShowSideBar] = useState(true);
 
     return (
@@ -19,7 +19,7 @@ const Admin = () => {
                     setShowSideBar={setShowSideBar}
                 />
 
-
+                <MainBody />
 
             </div>
 
@@ -27,4 +27,4 @@ const Admin = () => {
     )
 }
 
-export default Admin
+export default GuestHome

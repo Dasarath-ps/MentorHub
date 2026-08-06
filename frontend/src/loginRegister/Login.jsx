@@ -24,7 +24,7 @@ const Login = () => {
             if (res.data.message === "Admin login successful") {
                 navigator("/admin");
             } else if (res.data.message === "User login successful") {
-                navigator("/home");
+                navigator("/Home");
             }
         } catch (err) {
             // Extract the "detail" message sent by FastAPI ("Your email is not verified...")

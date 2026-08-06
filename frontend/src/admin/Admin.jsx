@@ -1,9 +1,8 @@
+import React from 'react'
+import Header from "./components/Navbar";
+import SideBar from "./components/SideBar";
 import { useState } from "react";
-import Header from "../components/Header";
-import SideBar from "../components/SideBar";
-import MainBody from "../components/MainBody";
-
-const Home = () => {
+const Admin = () => {
     const [showSideBar, setShowSideBar] = useState(true);
 
     return (
@@ -20,12 +19,12 @@ const Home = () => {
                     setShowSideBar={setShowSideBar}
                 />
 
-                <MainBody />
+
 
             </div>
 
         </div>
-    );
-};
+    )
+}
 
-export default Home;
+export default Admin

@@ -4,7 +4,7 @@ from app.schema import UserAuth
 from app.schema import LoginModel
 from app.schema import VerifyOTPRequest
 from app.schema import AdminAuth
-from app.security import create_access_token, hash_password, verify_password
+from app.security import  hash_password, verify_password
 from secrets import randbelow
 from datetime import datetime, timedelta
 from app.email_service import send_otp
@@ -19,8 +19,6 @@ async def login(user_data: LoginModel):
     if admin:
         if not user_data.password == admin["password"]:
             raise HTTPException(status_code=401, detail="Invalid admin credentials")
-
-        token = create_access_token({"sub": admin["adminName"], "role": "admin"})
         return {"message": "Admin login successful", "token": token}
 
     # Combine the checks to prevent user enumeration (good security practice)
@@ -32,11 +30,8 @@ async def login(user_data: LoginModel):
             status_code=403,
             detail="Your email is not verified. Please verify your OTP before logging in."
         )
-
-    token = create_access_token({"sub": user["email"], "role": "user"})
     return {
         "message": "User login successful",
-        "token": token,
         "user": {
             "email": user["email"],
             "username": user.get("username") or user.get("userName")

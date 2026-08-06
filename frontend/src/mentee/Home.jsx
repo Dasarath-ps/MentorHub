@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import Header from "../components/Header";
-import SideBar from "../components/SideBar";
-import MainBody from "../components/MainBody";
-const GuestHome = () => {
+import { useState } from "react";
+import Header from "./components/Header";
+import SideBar from "./components/SideBar";
+import MainBody from "./components/MainBody";
+
+const Home = () => {
     const [showSideBar, setShowSideBar] = useState(true);
 
     return (
@@ -24,7 +25,7 @@ const GuestHome = () => {
             </div>
 
         </div>
-    )
-}
+    );
+};
 
-export default GuestHome
+export default Home;

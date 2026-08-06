@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
-import Home from "./pages/Home.jsx";
-import GuestHome from "./pages/GuestHome.jsx";
-import VerifyUser from "./pages/VerifyUser.jsx";
-import Admin from "./pages/Admin.jsx";
+import Login from "./loginRegister/Login.jsx";
+import Register from "./loginRegister/Register.jsx";
+import Home from "./mentee/Home.jsx";
+import GuestHome from "./guest/GuestHome.jsx";
+import VerifyUser from "./loginRegister/VerifyUser.jsx";
+import Admin from "./admin/Admin.jsx";
 const App = () => {
   const location = useLocation();
 
