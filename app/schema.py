@@ -22,5 +22,5 @@ class VerifyOTPRequest(BaseModel):
     otp: str
 
 class AdminAuth(BaseModel):
-    adminName: str
+    email: str
     password: str

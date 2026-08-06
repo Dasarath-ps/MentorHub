@@ -14,12 +14,15 @@ router = APIRouter(tags=["Authentication"])
 #login page 
 @router.post("/login")
 async def login(user_data: LoginModel):
+
     user = await db["users"].find_one({"email": user_data.email})
-    admin = await db["AdminAuth"].find_one({"adminName": user_data.email})
+    admin = await db["adminAuth"].find_one({"email": user_data.email})
+    print(admin)
     if admin:
         if not user_data.password == admin["password"]:
             raise HTTPException(status_code=401, detail="Invalid admin credentials")
-        return {"message": "Admin login successful", "token": token}
+        
+        return {"message": "Admin login successful"}
 
     # Combine the checks to prevent user enumeration (good security practice)
     if not user or not verify_password(user_data.password, user["password"]):
