@@ -6,3 +6,4 @@ bcrypt
 email-validator
 aiosmtplib
 PyJWT
+python-multipart

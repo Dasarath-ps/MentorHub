@@ -8,6 +8,8 @@ import Home from "./mentee/Home.jsx";
 import GuestHome from "./guest/GuestHome.jsx";
 import VerifyUser from "./loginRegister/VerifyUser.jsx";
 import Admin from "./admin/Admin.jsx";
+import Mentor from "./mentor/Mentor.jsx";
+import ApplyMentor from "./mentor/ApplyMentor.jsx";
 const App = () => {
   const location = useLocation();
 
@@ -36,6 +38,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/mentor" element={<Mentor />} />
+        <Route path="/mentor/apply" element={<ApplyMentor />} />
       </Routes>
     </div>
   );

@@ -4,6 +4,7 @@ from datetime import datetime
 class LoginModel(BaseModel):
     email: str
     password: str
+    userType: str
 
 class UserAuth(BaseModel):
     userName: str
@@ -21,6 +22,18 @@ class VerifyOTPRequest(BaseModel):
     email: str
     otp: str
 
-class AdminAuth(BaseModel):
+class MentorApplication(BaseModel):
+    firstName: str
+    lastName: str
     email: str
     password: str
+    jobTitle: str
+    company: str
+    location: str
+    category: str
+    skills: str
+    bio: str
+    linkedin: str
+    website: str
+    whyMentor: str
+    achievement: str

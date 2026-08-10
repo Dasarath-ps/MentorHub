@@ -1,9 +1,9 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Form, File, UploadFile
 from app.database import db
 from app.schema import UserAuth
 from app.schema import LoginModel
 from app.schema import VerifyOTPRequest
-from app.schema import AdminAuth
+from app.schema import MentorApplication
 from app.security import  hash_password, verify_password
 from secrets import randbelow
 from datetime import datetime, timedelta
@@ -17,15 +17,20 @@ async def login(user_data: LoginModel):
 
     user = await db["users"].find_one({"email": user_data.email})
     admin = await db["adminAuth"].find_one({"email": user_data.email})
-    print(admin)
+    mentor = await db["mentors"].find_one({"email": user_data.email})
+    
     if admin:
         if not user_data.password == admin["password"]:
             raise HTTPException(status_code=401, detail="Invalid admin credentials")
         
         return {"message": "Admin login successful"}
+    if mentor and (user_data.userType == "mentor"):
+        if not user_data.password == mentor["password"]:
+            raise HTTPException(status_code=401, detail="Invalid mentor credentials")
+        return {"message": "Mentor login successful"}
 
     # Combine the checks to prevent user enumeration (good security practice)
-    if not user or not verify_password(user_data.password, user["password"]):
+    if not user or not verify_password(user_data.password, user["password"]) or user_data.userType != "mentee":
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     if not user.get("is_verified", False):
@@ -114,3 +119,72 @@ async def verify_otp(data: VerifyOTPRequest ):  #  FastAPI uses the schema here
     await db["otp"].delete_one({"email": data.email})
 
     return {"message": "OTP verified successfully"}
+
+#mentor_register
+@router.post("/mentor/apply")
+async def apply(
+    firstName: str = Form(...),
+    lastName: str = Form(...),
+    email: str = Form(...),
+    password: str = Form(...),
+    jobTitle: str = Form(...),
+    company: str = Form(...),
+    location: str = Form(...),
+    category: str = Form(...),
+    skills: str = Form(...),
+    bio: str = Form(...),
+    linkedin: str = Form(...),
+    website: str = Form(...),
+    whyMentor: str = Form(...),
+    achievement: str = Form(...),
+    profilePic: UploadFile = File(...)
+):
+
+    print("Name:", firstName, lastName)
+    print("Email:", email)
+    print("Image:", profilePic.filename)
+    print("Image type:", profilePic.content_type)
+
+    existing_mentor = await db["mentors"].find_one({
+        "email": email
+    })
+
+    if existing_mentor:
+        return {
+            "message": "Mentor already exists"
+        }
+
+    image_data = await profilePic.read()
+
+    mentor_data = {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "password": hash_password(password) ,
+        "jobTitle": jobTitle,
+        "company": company,
+        "location": location,
+        "category": category,
+        "skills": skills,
+        "bio": bio,
+        "linkedin": linkedin,
+        "website": website,
+        "whyMentor": whyMentor,
+        "achievement": achievement,
+
+        "profilePic": image_data,
+        "profilePicName": profilePic.filename,
+        "profilePicType": profilePic.content_type,
+
+        "accepted": "pending",
+        "created_at": datetime.utcnow()
+    }
+
+    result = await db["mentors"].insert_one(mentor_data)
+
+    return {
+        "message": "Mentor application submitted successfully",
+        "id": str(result.inserted_id)
+    }
+    
+    
