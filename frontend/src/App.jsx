@@ -17,7 +17,10 @@ const App = () => {
   useEffect(() => {
     toast.dismiss();
   }, [location.pathname]);
-
+  localStorage.getItem("adminToken");
+  localStorage.getItem("userToken");
+  const isAdminLoggedIn = !!localStorage.getItem("adminToken");
+  const isUserLoggedIn = !!localStorage.getItem("userToken");
   return (
     <div>
       <Toaster
@@ -40,6 +43,7 @@ const App = () => {
         <Route path="/admin" element={<Admin />} />
         <Route path="/mentor" element={<Mentor />} />
         <Route path="/mentor/apply" element={<ApplyMentor />} />
+
       </Routes>
     </div>
   );

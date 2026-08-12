@@ -9,24 +9,28 @@ import {
     FaChalkboardTeacher,
 } from "react-icons/fa";
 
-const SideBar = ({ showSideBar }) => {
+const SideBar = ({ showSideBar, isAdminLoggedIn }) => {
     const menu = [
         {
             name: "Dashboard",
             icon: <FaHome />,
         },
         {
-            name: "Manage Mentors",
+            name: isAdminLoggedIn ? "Manage Mentors" : "Find Mentors",
             icon: <FaChalkboardTeacher />,
         },
         {
-            name: "Manage Users",
+            name: isAdminLoggedIn ? "Manage Users" : "Community",
             icon: <FaUsers />,
         },
         {
             name: "Messages",
             icon: <FaComments />,
         },
+        !isAdminLoggedIn ? {
+            name: "Sessions",
+            icon: <FaCalendarAlt />,
+        } : null,
         {
             name: "Profile",
             icon: <FaUserFriends />,
@@ -59,10 +63,10 @@ const SideBar = ({ showSideBar }) => {
 
                 <h1 className="text-3xl font-bold text-gray-800">
 
-                    {showSideBar ? (
+                    {showSideBar && isAdminLoggedIn ? (
                         <>
                             Mentor
-                            <span className="text-green-600">Hub</span>
+                            <span className="text-green-600">is</span>
 
                         </>
 

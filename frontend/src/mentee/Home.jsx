@@ -123,6 +123,7 @@ const Home = () => {
                 NAVBAR
             ====================================================== */}
 
+
             <header className="sticky top-0 z-50 border-b border-[#123b38]/10 bg-[#fbfaf6]/90 backdrop-blur-xl">
 
                 <div className="w-[92%] max-w-[1180px] mx-auto h-[76px] flex items-center gap-8">

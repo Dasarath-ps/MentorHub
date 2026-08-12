@@ -35,8 +35,9 @@ const Login = () => {
                 navigate("/admin");
             } else if (res.data.message === "User login successful") {
                 navigate("/Home");
-            }else if (res.data.message === "Mentor login successful"){
+            } else if (res.data.message === "Mentor login successful") {
                 navigate("/mentor");
+
             }
         } catch (err) {
             const errorMessage =
@@ -232,11 +233,10 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => setUserType("mentee")}
-                                className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all ${
-                                    userType === "mentee"
-                                        ? "bg-white text-[#123b38] shadow-sm"
-                                        : "text-gray-500 hover:text-[#123b38]"
-                                }`}
+                                className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all ${userType === "mentee"
+                                    ? "bg-white text-[#123b38] shadow-sm"
+                                    : "text-gray-500 hover:text-[#123b38]"
+                                    }`}
                             >
                                 I'm a mentee
                             </button>
@@ -244,11 +244,10 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => setUserType("mentor")}
-                                className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all ${
-                                    userType === "mentor"
-                                        ? "bg-white text-[#123b38] shadow-sm"
-                                        : "text-gray-500 hover:text-[#123b38]"
-                                }`}
+                                className={`flex-1 py-3 rounded-lg text-sm font-semibold transition-all ${userType === "mentor"
+                                    ? "bg-white text-[#123b38] shadow-sm"
+                                    : "text-gray-500 hover:text-[#123b38]"
+                                    }`}
                             >
                                 I'm a mentor
                             </button>

@@ -2,7 +2,7 @@ import React from 'react'
 import Header from "./components/Navbar";
 import SideBar from "./components/SideBar";
 import { useState } from "react";
-const Admin = () => {
+const Admin = ({ isAdminLoggedIn }) => {
     const [showSideBar, setShowSideBar] = useState(true);
 
     return (
@@ -10,6 +10,7 @@ const Admin = () => {
 
             <SideBar
                 showSideBar={showSideBar}
+                isAdminLoggedIn={isAdminLoggedIn}
             />
 
             <div className="flex-1 flex flex-col">

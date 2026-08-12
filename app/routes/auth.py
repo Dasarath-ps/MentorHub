@@ -22,12 +22,14 @@ async def login(user_data: LoginModel):
     if admin:
         if not user_data.password == admin["password"]:
             raise HTTPException(status_code=401, detail="Invalid admin credentials")
+
         
         return {"message": "Admin login successful"}
     if mentor and (user_data.userType == "mentor"):
         if not user_data.password == mentor["password"]:
             raise HTTPException(status_code=401, detail="Invalid mentor credentials")
         return {"message": "Mentor login successful"}
+        
 
     # Combine the checks to prevent user enumeration (good security practice)
     if not user or not verify_password(user_data.password, user["password"]) or user_data.userType != "mentee":
@@ -38,8 +40,10 @@ async def login(user_data: LoginModel):
             status_code=403,
             detail="Your email is not verified. Please verify your OTP before logging in."
         )
+    token = "user_token"  # Replace with actual token generation logic
     return {
         "message": "User login successful",
+        "token": token,
         "user": {
             "email": user["email"],
             "username": user.get("username") or user.get("userName")
