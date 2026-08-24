@@ -10,6 +10,7 @@ import VerifyUser from "./loginRegister/VerifyUser.jsx";
 import Admin from "./admin/Admin.jsx";
 import Mentor from "./mentor/Mentor.jsx";
 import ApplyMentor from "./mentor/ApplyMentor.jsx";
+import FindMenotros from "./admin/FindMenotros.jsx";
 const App = () => {
   const location = useLocation();
 
@@ -40,7 +41,14 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Admin />} >
+          <Route path="find-mentors" element={<FindMenotros />} />
+          <Route path="community" element={<div>Community</div>} />
+          <Route path="messages" element={<div>Messages</div>} />
+          <Route path="settings" element={<div>Settings</div>} />
+          <Route path="sessions" element={<div>Sessions</div>} />
+          <Route path="profile" element={<div>Profile</div>} />
+        </Route>
         <Route path="/mentor" element={<Mentor />} />
         <Route path="/mentor/apply" element={<ApplyMentor />} />
 

@@ -2,6 +2,7 @@ import React from 'react'
 import Header from "./components/Navbar";
 import SideBar from "./components/SideBar";
 import { useState } from "react";
+import { Outlet } from 'react-router-dom';
 const Admin = ({ isAdminLoggedIn }) => {
     const [showSideBar, setShowSideBar] = useState(true);
 
@@ -19,7 +20,7 @@ const Admin = ({ isAdminLoggedIn }) => {
                     showSideBar={showSideBar}
                     setShowSideBar={setShowSideBar}
                 />
-
+                <Outlet />
 
 
             </div>

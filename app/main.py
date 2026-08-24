@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import auth
+from app.routes import auth, mentor
 
 app = FastAPI(title="College App API")
 
-origins = ["http://localhost:5173"]
+origins = ["http://localhost:5173", "http://localhost:5174"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,3 +16,4 @@ app.add_middleware(
 
 # Connect the routers
 app.include_router(auth.router)
+app.include_router(mentor.router)

@@ -182,13 +182,23 @@ const ApplyMentor = () => {
 
             data.append("profilePic", profilePic);
 
-            const res = await api.post("/mentor/apply", data);
+            try {
+                const res = await api.post("/mentor/apply", data);
 
-            console.log(res.data);
+                console.log(res.data);
 
-            setSubmitted(true);
+                setSubmitted(true);
 
-            toast.success("Mentor application submitted!");
+                toast.success("Mentor application submitted!");
+
+                navigate("/mentor");
+            } catch (error) {
+                console.error(error);
+                toast.error(
+                    error.response?.data?.detail ||
+                    "Failed to submit application."
+                );
+            }
 
         } catch (error) {
             console.error(error);
@@ -273,8 +283,8 @@ const ApplyMentor = () => {
 
                                         <div
                                             className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold ${step >= number
-                                                    ? "bg-[#176b5c] text-white"
-                                                    : "bg-[#f1f5f2] text-gray-400"
+                                                ? "bg-[#176b5c] text-white"
+                                                : "bg-[#f1f5f2] text-gray-400"
                                                 }`}
                                         >
                                             {step > number ? "✓" : number}
@@ -282,8 +292,8 @@ const ApplyMentor = () => {
 
                                         <span
                                             className={`hidden text-sm font-semibold sm:block ${step >= number
-                                                    ? "text-[#123b38]"
-                                                    : "text-gray-400"
+                                                ? "text-[#123b38]"
+                                                : "text-gray-400"
                                                 }`}
                                         >
                                             {name}
@@ -294,8 +304,8 @@ const ApplyMentor = () => {
                                     {number !== 3 && (
                                         <div
                                             className={`mx-3 h-px flex-1 ${step > number
-                                                    ? "bg-[#176b5c]"
-                                                    : "bg-gray-200"
+                                                ? "bg-[#176b5c]"
+                                                : "bg-gray-200"
                                                 }`}
                                         />
                                     )}
@@ -593,8 +603,8 @@ const ApplyMentor = () => {
                                     !isStepComplete() || !profilePic
                                 }
                                 className={`rounded-xl px-7 py-3 text-sm font-semibold text-white shadow-lg transition ${isStepComplete() && profilePic
-                                        ? "bg-[#176b5c] shadow-[#176b5c]/15 hover:-translate-y-0.5 hover:bg-[#0f594d]"
-                                        : "cursor-not-allowed bg-gray-300 shadow-none"
+                                    ? "bg-[#176b5c] shadow-[#176b5c]/15 hover:-translate-y-0.5 hover:bg-[#0f594d]"
+                                    : "cursor-not-allowed bg-gray-300 shadow-none"
                                     }`}
                             >
                                 Continue →
@@ -606,8 +616,8 @@ const ApplyMentor = () => {
                                     !isStepComplete() || loading
                                 }
                                 className={`rounded-xl px-7 py-3 text-sm font-semibold text-white shadow-lg transition ${isStepComplete() && !loading
-                                        ? "bg-[#176b5c] shadow-[#176b5c]/15 hover:-translate-y-0.5 hover:bg-[#0f594d]"
-                                        : "cursor-not-allowed bg-gray-300 shadow-none"
+                                    ? "bg-[#176b5c] shadow-[#176b5c]/15 hover:-translate-y-0.5 hover:bg-[#0f594d]"
+                                    : "cursor-not-allowed bg-gray-300 shadow-none"
                                     }`}
                             >
                                 {loading

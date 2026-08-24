@@ -8,13 +8,12 @@ import {
     FaSignOutAlt,
     FaChalkboardTeacher,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = ({ showSideBar, isAdminLoggedIn }) => {
+    const navigate = useNavigate();
     const menu = [
-        {
-            name: "Dashboard",
-            icon: <FaHome />,
-        },
+
         {
             name: isAdminLoggedIn ? "Manage Mentors" : "Find Mentors",
             icon: <FaChalkboardTeacher />,
@@ -98,7 +97,7 @@ const SideBar = ({ showSideBar, isAdminLoggedIn }) => {
                     {menu.map((item, index) => (
                         <button
                             key={index}
-                            className="
+                            className={`
                                 w-full
                                 flex
                                 items-center
@@ -106,11 +105,13 @@ const SideBar = ({ showSideBar, isAdminLoggedIn }) => {
                                 px-4
                                 py-3
                                 rounded-xl
-                                text-gray-700
+                                ${item.name.toLowerCase() == location.pathname.split("/").pop() ? "bg-green-200 text-green-600" : "text-gray-600"}
                                 hover:bg-green-50
                                 hover:text-green-600
                                 transition-all
-                            "
+                                duration-300
+                                `}
+                            onClick={() => navigate(`/admin/${item.name.toLowerCase().replace(/\s+/g, '-')}`)}
                         >
                             <span className="text-xl">
                                 {item.icon}
@@ -125,55 +126,6 @@ const SideBar = ({ showSideBar, isAdminLoggedIn }) => {
                     ))}
 
                 </div>
-
-            </div>
-
-            {/* User */}
-
-            <div className="border-t p-4">
-
-                {/* <div className="flex items-center gap-3">
-
-                    <div className="w-11 h-11 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
-                        D
-                    </div>
-
-                    {showSideBar && (
-                        <div>
-
-                            <h3 className="font-semibold text-gray-800">
-                                Devanandan
-                            </h3>
-
-                            <p className="text-sm text-gray-500">
-                                Mentee
-                            </p>
-
-                        </div>
-                    )}
-
-                </div> */}
-
-                {/* <button
-                    className="
-                        mt-5
-                        w-full
-                        flex
-                        items-center
-                        justify-center
-                        gap-3
-                        bg-red-50
-                        text-red-600
-                        py-3
-                        rounded-xl
-                        hover:bg-red-100
-                        transition-all
-                    "
-                >
-                    <FaSignOutAlt />
-
-                    {showSideBar && <span>Logout</span>}
-                </button> */}
 
             </div>
 
