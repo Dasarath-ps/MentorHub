@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import api from '../api';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const FindMenotros = () => {
+    const navigate = useNavigate();
     const [mentors, setMentors] = useState([]);
     const fetchMentors = async () => {
         try {
@@ -143,6 +145,7 @@ const FindMenotros = () => {
 
                         {/* Button */}
                         <button
+                            onClick={() => navigate(`/admin/find-mentors/${mentor._id}`)}
                             className="
                         mt-5
                         w-full

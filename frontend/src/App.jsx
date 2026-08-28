@@ -11,6 +11,7 @@ import Admin from "./admin/Admin.jsx";
 import Mentor from "./mentor/Mentor.jsx";
 import ApplyMentor from "./mentor/ApplyMentor.jsx";
 import FindMenotros from "./admin/FindMenotros.jsx";
+import MentorProfile from "./admin/MentorProfile.jsx";
 const App = () => {
   const location = useLocation();
 
@@ -43,6 +44,8 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/admin" element={<Admin />} >
           <Route path="find-mentors" element={<FindMenotros />} />
+          <Route path="find-mentors/:id" element={<MentorProfile />} />
+
           <Route path="community" element={<div>Community</div>} />
           <Route path="messages" element={<div>Messages</div>} />
           <Route path="settings" element={<div>Settings</div>} />

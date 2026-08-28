@@ -1,3 +1,6 @@
+
+
+
 import aiosmtplib
 from email.message import EmailMessage
 
@@ -26,6 +29,35 @@ Regards,
 MentorHub Team
 """
     )
+
+    await aiosmtplib.send(
+        message,
+        hostname="smtp.gmail.com",
+        port=587,
+        start_tls=True,
+        username=EMAIL,
+        password=PASSWORD,
+    )
+async def send_approval_email(receiver_email: str):
+    message = EmailMessage()
+    message["From"] = EMAIL
+    message["To"] = receiver_email
+    message["Subject"] = "MentorHub Approval Notification"
+
+    message.set_content(
+        f"""
+Hello,
+
+Your MentorHub application has been approved!
+
+Congratulations!
+
+Regards,
+MentorHub Team
+Go and login to your account to start mentoring.
+"""
+    )
+#login button link can be added here if needed
 
     await aiosmtplib.send(
         message,
