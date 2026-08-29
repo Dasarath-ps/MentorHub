@@ -31,11 +31,11 @@ const Login = () => {
 
             console.log(res.data);
 
-            if (res.data.message === "Admin login successful") {
+            if (res.data.message === "Admin login successfully") {
                 navigate("/admin");
-            } else if (res.data.message === "User login successful") {
-                navigate("/Home");
-            } else if (res.data.message === "Mentor login successful") {
+            } else if (res.data.message === "User login successfully") {
+                navigate("/home");
+            } else if (res.data.message === "Mentor login successfully") {
                 navigate("/mentor");
 
             }
@@ -250,6 +250,26 @@ const Login = () => {
                                     }`}
                             >
                                 I'm a mentor
+                            </button>
+
+                        </div>
+                        <div className="flex justify-end -mt-4 mb-6">
+
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    if (userType === "admin") {
+                                        setUserType("mentee");
+                                    } else {
+                                        setUserType("admin");
+                                    }
+                                }}
+                                className={`text-xs font-semibold transition-colors ${userType === "admin"
+                                    ? "text-[#0b5d57]"
+                                    : "text-gray-400 hover:text-[#16827a]"
+                                    }`}
+                            >
+                                {userType === "admin" ? "← Back to user login" : "Admin Login"}
                             </button>
 
                         </div>

@@ -14,41 +14,51 @@ router = APIRouter(tags=["Authentication"])
 #login page 
 @router.post("/login")
 async def login(user_data: LoginModel):
-
-    user = await db["users"].find_one({"email": user_data.email})
-    admin = await db["adminAuth"].find_one({"email": user_data.email})
-    mentor = await db["mentors"].find_one({"email": user_data.email})
+    print(f"The frontend data is :{user_data}")
+    if user_data.userType == "mentee":
+        user = await db["users"].find_one({"email": user_data.email})
+        if not user or not verify_password(user_data.password, user["password"]):
+                return {"message": "Invalid mentee credentials"}
+        token = "user_token"  # Replace with actual token generation logic
+        return {
+                "message": "User login successfully",
+                "token": token,
+                "user": {
+                    "email": user["email"],
+                    "username": user.get("username") or user.get("userName")
+                    }
+                }
+    elif user_data.userType == "mentor":
+        mentor = await db["mentors"].find_one({"email": user_data.email, "accepted": "true"})
+        
+        if not mentor or not verify_password(user_data.password, mentor["password"]):
+            return {"message": "Invalid mentor credentials"}    
+        token = "mentor_token"  # Replace with actual token generation logic
+        return {
+                "message": "Mentor login successfully",
+                "token": token,
+                "mentor": {
+                    "email": mentor["email"],
+                    "username": mentor.get("username") or mentor.get("userName")
+                    }
+                }
+    elif user_data.userType == "admin":
+        admin = await db["admins"].find_one({"email": user_data.email})
+        if  not admin or not user_data.password == admin["password"]:
+                return {"message": "Invalid admin credentials"}
+        return {"message": "Admin login successfully"}
     
-    if admin:
-        if not user_data.password == admin["password"]:
-            raise HTTPException(status_code=401, detail="Invalid admin credentials")
-
-        
-        return {"message": "Admin login successful"}
-    if mentor and (user_data.userType == "mentor"):
-        if not user_data.password == mentor["password"]:
-            raise HTTPException(status_code=401, detail="Invalid mentor credentials")
-        return {"message": "Mentor login successful"}
-        
-
+    
     # Combine the checks to prevent user enumeration (good security practice)
-    if not user or not verify_password(user_data.password, user["password"]) or user_data.userType != "mentee":
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+    # if not user or not verify_password(user_data.password, user["password"]) or user_data.userType != "mentee":
+    #     raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    if not user.get("is_verified", False):
-        raise HTTPException(
-            status_code=403,
-            detail="Your email is not verified. Please verify your OTP before logging in."
-        )
-    token = "user_token"  # Replace with actual token generation logic
-    return {
-        "message": "User login successful",
-        "token": token,
-        "user": {
-            "email": user["email"],
-            "username": user.get("username") or user.get("userName")
-        }
-    }
+    #     if not user.get("is_verified", False):
+    #     raise HTTPException(
+    #         status_code=403,
+    #         detail="Your email is not verified. Please verify your OTP before logging in."
+    #     )
+    
 
 #register page 
 @router.post("/register")

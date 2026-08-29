@@ -94,7 +94,7 @@ const MentorProfile = () => {
         <div className="min-h-screen bg-gray-50">
 
             {/* ================= HEADER ================= */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-green-700 via-green-600 to-emerald-600">
+            <section className="relative overflow-hidden bg-linear-to-br from-green-700 via-green-600 to-emerald-600 rounded-2xl shadow-lg">
 
                 {/* Decorative circles */}
                 <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/10"></div>
@@ -518,7 +518,7 @@ const MentorProfile = () => {
 
 
                         {/* CTA */}
-                        <section className="overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 p-6 text-white shadow-lg">
+                        <section className="overflow-hidden rounded-2xl bg-linear-to-br from-gray-900 to-gray-800 p-6 text-white shadow-lg">
 
                             <div className="text-3xl">
                                 🚀
