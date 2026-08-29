@@ -7,3 +7,4 @@ email-validator
 aiosmtplib
 PyJWT
 python-multipart
+python-jose[cryptography]

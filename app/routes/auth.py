@@ -8,6 +8,7 @@ from app.security import  hash_password, verify_password
 from secrets import randbelow
 from datetime import datetime, timedelta
 from app.email_service import send_otp
+from app.utils.auth import create_access_token
 
 router = APIRouter(tags=["Authentication"])
 
@@ -19,7 +20,7 @@ async def login(user_data: LoginModel):
         user = await db["users"].find_one({"email": user_data.email})
         if not user or not verify_password(user_data.password, user["password"]):
                 return {"message": "Invalid mentee credentials"}
-        token = "user_token"  # Replace with actual token generation logic
+        token = create_access_token(email=user["email"], user_type="mentee")
         return {
                 "message": "User login successfully",
                 "token": token,
@@ -33,10 +34,10 @@ async def login(user_data: LoginModel):
         
         if not mentor or not verify_password(user_data.password, mentor["password"]):
             return {"message": "Invalid mentor credentials"}    
-        token = "mentor_token"  # Replace with actual token generation logic
+          # Replace with actual token generation logic
         return {
                 "message": "Mentor login successfully",
-                "token": token,
+                "token": create_access_token(email=mentor["email"], user_type="mentor"),
                 "mentor": {
                     "email": mentor["email"],
                     "username": mentor.get("username") or mentor.get("userName")
@@ -46,7 +47,9 @@ async def login(user_data: LoginModel):
         admin = await db["admins"].find_one({"email": user_data.email})
         if  not admin or not user_data.password == admin["password"]:
                 return {"message": "Invalid admin credentials"}
-        return {"message": "Admin login successfully"}
+        token = create_access_token(email=admin["email"],user_type="admin")
+
+        return {"message": "Admin login successfully", "token": token}
     
     
     # Combine the checks to prevent user enumeration (good security practice)

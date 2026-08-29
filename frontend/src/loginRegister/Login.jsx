@@ -30,6 +30,15 @@ const Login = () => {
             });
 
             console.log(res.data);
+            if (res.data.token) {
+                if (userType === "mentee") {
+                    localStorage.setItem("userToken", res.data.token);
+                } else if (userType === "mentor") {
+                    localStorage.setItem("mentorToken", res.data.token);
+                } else if (userType === "admin") {
+                    localStorage.setItem("adminToken", res.data.token);
+                }
+            }
 
             if (res.data.message === "Admin login successfully") {
                 navigate("/admin");

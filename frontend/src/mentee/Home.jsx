@@ -179,12 +179,14 @@ const Home = () => {
 
                     <div className="hidden sm:flex items-center gap-2.5">
 
-                        <button
-                            onClick={() => navigate("/login")}
-                            className="px-5 py-3 rounded-full border border-[#b8c9c2] text-sm font-bold hover:bg-white transition"
-                        >
-                            Log in
-                        </button>
+                        {
+                            !localStorage.getItem("userToken") ? (<button
+                                onClick={() => navigate("/login")}
+                                className="px-5 py-3 rounded-full border border-[#b8c9c2] text-sm font-bold hover:bg-white transition"
+                            >
+                                Log in
+                            </button>) : (<></>)
+                        }
 
                         <button
                             onClick={scrollToSearch}
